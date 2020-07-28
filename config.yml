@@ -1,0 +1,16 @@
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01 # recommended linux image - includes Ubuntu 16.04, docker 18.09.3, docker-compose 1.23.1
+    resource_class: medium
+    steps:
+      - checkout
+      - run:
+          name: WhiteSource integration (with sample curl command)
+          command: |
+            bash <(curl -s -L https://github.com/whitesource/unified-agent-distribution/raw/master/standAlone/wss_agent.sh) -apiKey c6ea57d9411e4226ad8948f25199ae0c6a4dfda311a948a692de1bc5fac994cb -c .circleci/wss-unified-agent-cs.config -product CircleCI -project pipelines-dotnet-core -d ~/
+      - run:
+          name: Java command
+          command: |
+            java -version
+            
